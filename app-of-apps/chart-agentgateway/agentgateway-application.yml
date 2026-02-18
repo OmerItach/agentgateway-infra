@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: agentgateway
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/instance: agentgateway-root
+    app.kubernetes.io/managed-by: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
+      targetRevision: HEAD
+      ref: values
+    - repoURL: https://kgateway-dev.github.io/charts
+      chart: agentgateway
+      targetRevision: v2.2.0
+      helm:
+        skipCrds: false
+        valueFiles:
+          - $values/app-of-apps/chart-agentgateway/values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: agentgateway-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

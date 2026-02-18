@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Secret
+metadata:
+  name: agentgateway-infra-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
