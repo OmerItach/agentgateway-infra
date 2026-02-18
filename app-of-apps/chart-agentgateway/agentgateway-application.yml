@@ -9,8 +9,8 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
-      targetRevision: HEAD
+    - repoURL: https://github.com/OmerItach/agentgateway-infra.git
+      targetRevision: main
       ref: values
     - repoURL: https://kgateway-dev.github.io/charts
       chart: agentgateway

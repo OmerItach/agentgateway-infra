@@ -11,9 +11,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
+    repoURL: https://github.com/OmerItach/agentgateway-infra.git
     path: app-of-apps
-    targetRevision: HEAD
+    targetRevision: main
     directory:
       recurse: true
   destination:
