@@ -35,7 +35,11 @@ spec:
     - name: agentgateway-proxy
       namespace: agentgateway-system
   rules:
-  - backendRefs:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /azure-openai
+    backendRefs:
     - name: azure-openai
       namespace: agentgateway-system
       group: agentgateway.dev

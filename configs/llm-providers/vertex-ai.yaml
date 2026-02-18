@@ -35,7 +35,11 @@ spec:
     - name: agentgateway-proxy
       namespace: agentgateway-system
   rules:
-  - backendRefs:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /vertex-ai
+    backendRefs:
     - name: vertex-ai
       namespace: agentgateway-system
       group: agentgateway.dev

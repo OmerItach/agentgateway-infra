@@ -33,7 +33,11 @@ spec:
     - name: agentgateway-proxy
       namespace: agentgateway-system
   rules:
-  - backendRefs:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /google
+    backendRefs:
     - name: google
       namespace: agentgateway-system
       group: agentgateway.dev

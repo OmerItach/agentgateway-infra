@@ -22,7 +22,11 @@ spec:
     - name: agentgateway-proxy
       namespace: agentgateway-system  
   rules:
-    - backendRefs:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /mcp
+      backendRefs:
       - name: mcp-backend
         group: agentgateway.dev
         kind: AgentgatewayBackend

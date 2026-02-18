@@ -36,7 +36,11 @@ spec:
     - name: agentgateway-proxy
       namespace: agentgateway-system
   rules:
-  - backendRefs:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /bedrock
+    backendRefs:
     - name: bedrock
       namespace: agentgateway-system
       group: agentgateway.dev
