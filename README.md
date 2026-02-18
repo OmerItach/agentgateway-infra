@@ -55,9 +55,9 @@ To connect agents natively:
 3.  Refer to the [A2A Connectivity guide](https://agentgateway.dev/docs/kubernetes/latest/agent/).
 
 ### 🤖 Adding LLM Providers
-To integrate LLM providers like OpenAI, Gemini, Vertex AI, Azure OpenAI, or Anthropic:
+To integrate LLM providers like OpenAI, Gemini, Vertex AI, Azure OpenAI, Anthropic, or Bedrock:
 1.  Create a `Secret` for the API key in `configs/llm-providers/`.
-2.  Define an `AgentgatewayBackend` with the `ai` spec (e.g., `openai`, `gemini`, `vertexai`, `azureopenai`, or `anthropic`).
+2.  Define an `AgentgatewayBackend` with the `ai` spec (e.g., `openai`, `gemini`, `vertexai`, `azureopenai`, `anthropic`, or `bedrock`).
 3.  Create an `HTTPRoute` pointing to the backend.
 4.  Agent Gateway automatically handles URL rewriting to the provider's specific endpoint.
 5.  Refer to the [LLM Consumption guide](https://agentgateway.dev/docs/kubernetes/latest/llm/).
