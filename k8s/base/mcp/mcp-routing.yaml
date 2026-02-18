@@ -8,7 +8,7 @@ spec:
     targets:
     - name: mcp-target
       static:
-        host: mcp-website-fetcher.agentgateway-system.svc.cluster.local
+        host: mcp-website-fetcher
         port: 80
         protocol: SSE   
 ---
