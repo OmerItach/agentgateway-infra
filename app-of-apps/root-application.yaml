@@ -11,7 +11,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: /home/omer/Desktop/Customers/Amdocs/agentgateway-infra
+    repoURL: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
     path: app-of-apps
     targetRevision: HEAD
     directory:

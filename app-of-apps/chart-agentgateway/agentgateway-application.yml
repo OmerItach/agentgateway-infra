@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: /home/omer/Desktop/Customers/Amdocs/agentgateway-infra
+    - repoURL: https://github.com/YOUR_ORG/agentgateway-infra.git # UPDATE THIS
       targetRevision: HEAD
       ref: values
     - repoURL: https://kgateway-dev.github.io/charts
