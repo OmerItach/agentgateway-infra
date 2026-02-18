@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: https://github.com/OmerItach/agentgateway-infra.git
     path: app-of-apps
-    targetRevision: main
+    targetRevision: dev
     directory:
       recurse: true
   destination:

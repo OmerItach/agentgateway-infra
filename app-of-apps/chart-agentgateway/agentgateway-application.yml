@@ -10,7 +10,7 @@ spec:
   project: default
   sources:
     - repoURL: https://github.com/OmerItach/agentgateway-infra.git
-      targetRevision: main
+      targetRevision: dev
       ref: values
     - repoURL: ghcr.io/kgateway-dev/charts
       chart: agentgateway

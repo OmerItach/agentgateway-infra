@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - proxies/agentgateway-proxy.yaml
+  - mcp/mcp-server.yaml
+  - mcp/mcp-routing.yaml
+  - agent-connectivity/a2a-agent.yaml
+  - llm-providers/openai.yaml
+  - llm-providers/gemini.yaml
+  - llm-providers/vertex-ai.yaml
+  - llm-providers/azure-openai.yaml
+  - llm-providers/anthropic.yaml
+  - llm-providers/bedrock.yaml
+  - modules/default-parameters.yaml
