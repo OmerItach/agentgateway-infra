@@ -17,6 +17,7 @@ agentgateway-infra/
 └── configs/                             # Your custom resources (auto-synced)
     ├── proxies/                         # Gateway Proxy definitions
     ├── mcp/                             # MCP Server workloads and routing
+    ├── llm-providers/                   # LLM Provider configs (OpenAI, etc.)
     ├── agent-connectivity/              # Agent-to-Agent (A2A) and connectivity resources
     └── modules/                         # AgentgatewayParameters and module configs
 ```
@@ -52,6 +53,14 @@ To connect agents natively:
 1.  Deploy your agent service with `appProtocol: kgateway.dev/a2a` on the port.
 2.  Create an `HTTPRoute` in `configs/agent-connectivity/` pointing to your agent.
 3.  Refer to the [A2A Connectivity guide](https://agentgateway.dev/docs/kubernetes/latest/agent/).
+
+### 🤖 Adding LLM Providers
+To integrate LLM providers like OpenAI:
+1.  Create a `Secret` for the API key in `configs/llm-providers/`.
+2.  Define an `AgentgatewayBackend` with the `ai` spec.
+3.  Create an `HTTPRoute` pointing to the backend.
+4.  Agent Gateway automatically handles URL rewriting (e.g., to `/v1/chat/completions`).
+5.  Refer to the [LLM Consumption guide](https://agentgateway.dev/docs/kubernetes/latest/llm/).
 
 ### 🤖 Adding MCPs (Model Context Protocol)
 MCP servers can be connected via `AgentgatewayBackend` and `HTTPRoute`. Place these in `configs/mcp/`.
