@@ -6,73 +6,58 @@ This repository manages the deployment and configuration of [Agent Gateway](http
 
 ```
 agentgateway-infra/
-├── repo.yml                             # Template for Argo CD Repo registration
-├── README.md                            # This file
-├── app-of-apps/                         # Infrastructure Application Definitions
-│   ├── root-application.yaml             # The "Master" application (Root of the tree)
-│   ├── gateway-api/                     # Kubernetes Gateway API CRDs (v1.4.0)
-│   ├── chart-agentgateway-crds/         # Agent Gateway specific CRDs
-│   ├── chart-agentgateway/              # Agent Gateway Controller (Helm Chart)
-│   └── agentgateway-configs-application.yml # Argo CD App managing the configs/ folder
-└── configs/                             # Your custom resources (auto-synced)
-    ├── proxies/                         # Gateway Proxy definitions
-    ├── mcp/                             # MCP Server workloads and routing
-    ├── llm-providers/                   # LLM Provider configs (OpenAI, etc.)
-    ├── agent-connectivity/              # Agent-to-Agent (A2A) and connectivity resources
-    └── modules/                         # AgentgatewayParameters and module configs
+├── k8s/
+│   ├── base/                            # Core manifests (Common to all envs)
+│   │   ├── kustomization.yaml           # Base kustomization
+│   │   ├── proxies/
+│   │   ├── mcp/
+│   │   ├── llm-providers/
+│   │   ├── agent-connectivity/
+│   │   └── modules/
+│   └── overlays/                        # Environment-specific overrides
+│       ├── dev/                         # Development Overlay
+│       ├── stage/                       # Staging Overlay
+│       └── prod/                        # Production Overlay
+├── app-of-apps/                         # Argo CD Application Definitions
+│   ├── root-application.yaml             # The "Master" application
+│   └── ...                              # Component applications
+├── repo.yml                             # Repo registration secret
+└── README.md
 ```
+
+## 🌳 Branching Strategy
+Following the organization's standards:
+- **`dev` branch**: Active development and the primary source for Argo CD.
+- **`stage` branch**: For staging environment validation.
+- **`main` branch**: Production-ready code.
+
+> [!IMPORTANT]
+> Per organization policy, Argo CD applications are configured to point to the `dev` branch and use path-based overlays to distinguish environments.
 
 ## 🚀 Getting Started
 
 ### 1. Initialize your Repository
-1.  Create a new Git repository (e.g., GitHub, GitLab).
-2.  Push this folder's content to your repository.
-3.  Update the `repoURL` placeholders with your actual Git repository URL (currently set to `https://github.com/OmerItach/agentgateway-infra.git`).
+1.  Push this content to your `dev` branch.
+2.  Ensure `stage` and `main` branches are also initialized.
 
 ### 2. Register with Argo CD
-Apply the repository secret to your Argo CD namespace:
 ```bash
 kubectl apply -f repo.yml -n argocd
 ```
 
 ### 3. Deploy the Root Application
-Apply the root application to start the sync process:
 ```bash
 kubectl apply -f app-of-apps/root-application.yaml -n argocd
 ```
 
 ## 🛠 Usage & Extensions
 
-This project is designed to be easily extended with new configurations.
+### 🏘 Multi-Environment Config (Kustomize)
+- **Base**: Add your core resources to `k8s/base/`.
+- **Overlays**: Use `k8s/overlays/<env>/kustomization.yaml` to add patches or name prefixes for specific environments.
 
-### 🌐 Adding Proxies (Gateways)
-To set up a new proxy, create a Kubernetes `Gateway` resource in `configs/proxies/`.
-
-### 🤝 Agent-to-Agent (A2A) Connectivity
-To connect agents natively:
-1.  Deploy your agent service with `appProtocol: kgateway.dev/a2a` on the port.
-2.  Create an `HTTPRoute` in `configs/agent-connectivity/` pointing to your agent.
-3.  Refer to the [A2A Connectivity guide](https://agentgateway.dev/docs/kubernetes/latest/agent/).
-
-### 🤖 Adding LLM Providers
-To integrate LLM providers like OpenAI, Gemini, Vertex AI, Azure OpenAI, Anthropic, or Bedrock:
-1.  Create a `Secret` for the API key in `configs/llm-providers/`.
-2.  Define an `AgentgatewayBackend` with the `ai` spec (e.g., `openai`, `gemini`, `vertexai`, `azureopenai`, `anthropic`, or `bedrock`).
-3.  Create an `HTTPRoute` pointing to the backend.
-4.  Agent Gateway automatically handles URL rewriting to the provider's specific endpoint.
-5.  Refer to the [LLM Consumption guide](https://agentgateway.dev/docs/kubernetes/latest/llm/).
-
-### 🤖 Adding MCPs (Model Context Protocol)
-MCP servers can be connected via `AgentgatewayBackend` and `HTTPRoute`. Place these in `configs/mcp/`.
-
-### 🍱 Adding Modules (AgentgatewayParameters)
-Agent Gateway allows fine-tuning via `AgentgatewayParameters`. Use the `configs/modules/` directory for these. These parameters allow you to configure LLM connectivity, global security policies, and more.
-
-### 🔄 How to add a new "App" to the tree
-If you want to add a new component (e.g., a monitoring stack):
-1.  Create a new folder in `app-of-apps/`.
-2.  Add an Argo CD `Application` manifest inside it.
-3.  The `root-application.yaml` will automatically pick it up.
+### 🤖 Adding Components
+Follow the same patterns as before, but place your manifests in `k8s/base/` and add them to `k8s/base/kustomization.yaml`.
 
 ## 📋 Best Practices
 - **Values Separation**: Keep sensitive data in external secrets (using external-secrets operator) and reference them in your manifests.
