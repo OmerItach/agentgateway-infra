@@ -1,0 +1,9 @@
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayParameters
+metadata:
+  name: default-parameters
+  namespace: agentgateway-system
+spec:
+  # Example configuration for LLM or other modules
+  # Refer to https://agentgateway.dev/docs/kubernetes/latest/reference/parameters/
+  logLevel: info
