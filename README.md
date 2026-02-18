@@ -55,11 +55,11 @@ To connect agents natively:
 3.  Refer to the [A2A Connectivity guide](https://agentgateway.dev/docs/kubernetes/latest/agent/).
 
 ### 🤖 Adding LLM Providers
-To integrate LLM providers like OpenAI:
+To integrate LLM providers like OpenAI or Gemini:
 1.  Create a `Secret` for the API key in `configs/llm-providers/`.
-2.  Define an `AgentgatewayBackend` with the `ai` spec.
+2.  Define an `AgentgatewayBackend` with the `ai` spec (e.g., `openai` or `gemini`).
 3.  Create an `HTTPRoute` pointing to the backend.
-4.  Agent Gateway automatically handles URL rewriting (e.g., to `/v1/chat/completions`).
+4.  Agent Gateway automatically handles URL rewriting to the provider's specific endpoint.
 5.  Refer to the [LLM Consumption guide](https://agentgateway.dev/docs/kubernetes/latest/llm/).
 
 ### 🤖 Adding MCPs (Model Context Protocol)
